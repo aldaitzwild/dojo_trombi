@@ -123,6 +123,13 @@
         ],
     ];
 
+
+    $filter = 'all';
+    if(isset($_GET['filter'])) {
+        $filter = $_GET['filter'];
+    }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -147,16 +154,36 @@
     </form>
 
     <main class="container">
+
+        <?php
+
+        foreach($members as $member) { 
+
+            if($filter != 'all') {
+                if($filter == 'men' && $member['gender'] == 'woman')
+                    continue;
+
+                if($filter == 'women' && $member['gender'] == 'man')
+                    continue;
+            }
+
+        ?>
+
         <div class="card">
-            <h3>Prénom Nom</h3>
+            <h3><?= $member['firstname'] . ' ' . $member['lastname'] ?></h3>
             <p>
-                <img src="https://i.pravatar.cc/150?img=4">
+                <img src="https://i.pravatar.cc/150?img=<?= $member['pictureNumber'] ?>">
             </p>
             <ul>
-                <li>Age : 16</li>
-                <li>Email :  prenom.nom@wild.com</li>
+                <li>Age : <?= $member['age'] ?></li>
+                <li>Email :  <?= $member['email'] ?></li>
             </ul>
         </div>
+
+        <?php
+        }
+        ?>
+
     </main>
     
 </body>
